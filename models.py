@@ -23,3 +23,13 @@ class Game(Document):
     }
     use_dot_notation = True
     
+class Player(Document):
+    structure = {
+        'id': int,
+        'name': basestring,
+        'games': [{
+            'game_id': int,
+            'place': int
+        }]
+    }
+          
