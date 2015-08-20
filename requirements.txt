@@ -1,4 +1,6 @@
+dominate==2.1.12
 Flask==0.10.1
+Flask-Bootstrap==3.3.5.6
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
