@@ -1,9 +1,10 @@
+import os
+
 from mongokit import Connection
 from models import Game
 
-MONGODB_HOST = 'localhost'
-MONGODB_PORT = 27017
+MONGODB_URI = os.environ.get('MONGODB_URI')
 
-connection = Connection(MONGODB_HOST, MONGODB_PORT)
+connection = Connection(MONGODB_URI)
 connection.register([Game])
 
