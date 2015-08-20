@@ -1,0 +1,27 @@
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}Test{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div id="test_chart" class="chart"></div>
+  <script>
+    var series = {{ series|safe }}
+    var title = {{ title|safe }}
+    var xAxis = {{ xAxis|safe }}
+    var yAxis = {{ yAxis|safe }}
+    var chart = {{ chart|safe }}
+    var tooltip = {{ tooltip|safe }}
+    var plotOptions = {{ plotOptions|safe }}
+  </script>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src={{ url_for('static', filename='chart.js') }}></script>
+  <script src={{ url_for('static', filename='index.js') }}></script>
+{% endblock %}
