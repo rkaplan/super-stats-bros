@@ -8,19 +8,20 @@ match = Blueprint('match', __name__)
 @match.route('/matches/<id>')
 def show(id):
     game = connection['test'].games.Game.find_one({'id':int(id)})
+    playerscol = connection['test'].players
+    players = {}
     
     chart = {"renderTo": 'test_chart', "type": 'spline', "height": 350}
     series = []
     for p in game.players:
+        players[p['player_id']] = playerscol.Player.find_one({'id':p['player_id']})
         pdata = []
         for s in game.states:
             pdata.append(s['player_states'][p['player_id']]['damage'])
-        series.append({"name": 'Player ' + str(p['player_id']), "data": pdata})
+        series.append({"name": str(players[p['player_id']]['name']), "data": pdata})
 
     plotOptions = {"series": {"marker": {"enabled": 'false'}}}
-    titletext = ('Player ' + str(game.players[0]['player_id']) + ' (' + game.players[0]['character'] + ') vs. Player ' + str(game.players[1]['player_id']) + ' (' + game.players[1]['character'] + ')')
-    #title = {"text": ('Player ' + str(game.players[0]['player_id']) + ' (' + game.players[0]['character'] + ') vs. Player ' + str(game.players[1]['player_id']) + ' (' + game.players[1]['character'] + ')')}
-    print titletext
+    titletext = (players[0]['name'] + ' (' + game.players[0]['character'] + ') vs. ' + players[1]['name'] + ' (' + game.players[1]['character'] + ')')
     title = {"text": str(titletext)}
     xAxis = {"title": {"text": 'Time'}, "minTickInterval": 1000, "type": 'datetime', "dateTimeLabelFormats": {"second": '%M:%S', "day": '%M:%S'}}
     yAxis = {"title": {"text": 'Damage'}, "minTickInterval": 1, "labels": {"format": '{value}%'}}
