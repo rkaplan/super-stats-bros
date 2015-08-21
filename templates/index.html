@@ -6,8 +6,14 @@
 
 <div class="container">
   <div class="jumbotron">
-    <h1>SUPER STATS BROS!</h1>
-    <p>Description to be added...</p>
+    <center>
+      <h1>SUPER STATS BROS!</h1>
+      {% if mature %}
+        <iframe id="player" type="text/html" width="640" height="480" src="http://www.twitch.tv/superstatsbro/embed" frameborder="0"></iframe>
+      {% else %}
+        <p>The stream is currently offline. Check again later!</p>
+      {% endif %}
+    </center>  
   </div>
 
   <h2>Recent Games</h2>
