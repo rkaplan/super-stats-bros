@@ -1,11 +1,14 @@
 {%- extends "bootstrap/base.html" %}
 
-{% block title %}Match{% endblock %}
+{% block title %}SUPER SMASH BROS! - Match {{id}}{% endblock %}
 
 {% block content %}
 
 <div class="container">
-  <div id="test_chart" class="chart"></div>
+  <h1>Match {{id}}</h1>
+  <div class="well">
+    <div id="test_chart" class="chart"></div>
+  </div>
   <script>
     var series = {{ series|safe }}
     var title = {{ title|safe }}
@@ -15,6 +18,25 @@
     var tooltip = {{ tooltip|safe }}
     var plotOptions = {{ plotOptions|safe }}
   </script>
+  
+  <h3>Results</h3>
+  
+  <table class="table">
+    <tr>
+      <th>Place</th>
+      <th>Player</th>
+      <th>Character</th>
+      <th></th>
+    </tr>
+    {% for p in playernames %}
+      <tr>
+	<td>{{ "1st" if playernames[0]==p else "2nd" if playernames[1]==p else "3rd" if playernames[1]==p else "4th"}}</td>
+	<td>{{p}}</td>
+	<td>{{places[p]}}</td>
+	<td><a href={{links[p]}}>Profile</a></td>
+      </tr>
+    {% endfor %}
+  </table>
 </div>
 
 {% endblock %}

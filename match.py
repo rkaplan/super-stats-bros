@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, url_for
 from models import Game
 from models import Player
 from database import connection
+from player import player
 
 match = Blueprint('match', __name__)
 
@@ -31,7 +32,7 @@ def show(id):
             ps = s
         for s in game.states:
             if s not in ko:
-                pdata.append({'x': (s['ts']-game['start_ts']).seconds*1000, 'y': s['player_states'][p['player_id']]['damage']})
+                pdata.append({'x': (s['ts']-game['start_ts']).seconds*1000, 'y': s['player_states'][p['player_id']]['damage'], 'marker': {'symbol': shapes[currcolor]}})
             else:
                 pdata.append({'x': (s['ts']-game['start_ts']).seconds*1000, 'y': s['player_states'][p['player_id']]['damage'], 'marker': {'enabled': 1, 'symbol': 'url(' + url_for('static', filename='explosion.png') + ')'}})
                 if first:
@@ -53,5 +54,14 @@ def show(id):
     xAxis = {"title": {"text": 'Time'}, "minTickInterval": 1000, "type": 'datetime', "dateTimeLabelFormats": {"second": '%M:%S', "day": '%M:%S'}}
     yAxis = {"title": {"text": 'Damage'}, "minTickInterval": 1, "labels": {"format": '{value}%'}, "min": 0}
     tooltip = {"crosshairs": 1, "shared": 1, "xDateFormat": '%M:%S', "valueSuffix": '%'}
-    
-    return render_template("show.html", chart=chart, series=series, plotOptions=plotOptions, title=title, xAxis=xAxis, yAxis=yAxis, tooltip=tooltip)
+
+    playernames = []
+    links = {}
+    for r in game.results:
+        playernames.append(players[r].name)
+        links[players[r].name] = url_for('player.player_show',name=str(players[r].name))
+    places = {}
+    for p in game.players:
+        places[players[p['player_id']].name] = p['character']
+        
+    return render_template("show.html", chart=chart, series=series, plotOptions=plotOptions, title=title, xAxis=xAxis, yAxis=yAxis, tooltip=tooltip, playernames=playernames, places=places, links=links, id=id)

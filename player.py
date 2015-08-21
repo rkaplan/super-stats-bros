@@ -38,7 +38,7 @@ def player_show(name):
     xAxis = {"categories": [str(s) for s in top_char]}
     yAxis = {"allowDecimals": 0, "minTickInterval": 1, "min": 0, "title": {"text": "Games"}}
 
-    series = [{"name": "Games played", "data": [{"y": char_games[c], "name": str(c + " - " + str(char_wins[c]/char_games[c]*100)+'% winrate')} for c in top_char]}, {"name": "Wins", "data": [char_wins[c] for c in top_char]}]
+    series = [{"name": "Games played", "color": "#0066FF", "data": [{"y": char_games[c], "name": str(c + " - " + str(char_wins[c]/char_games[c]*100)+'% winrate')} for c in top_char]}, {"name": "Wins", "color": "#009933", "data": [char_wins[c] for c in top_char]}]
 
     tooltip = {"shared": 1}
     plotOptions = {"series": {"pointPadding": 0}}

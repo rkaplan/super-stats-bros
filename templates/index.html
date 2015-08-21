@@ -24,12 +24,12 @@
 	  {% for p in players[g] %}
 	    {{ p[0] }} ({{ p[1] }})
 	    {% if p != players[g][-1] %}
-	      vs.<br>
+	      ,
 	    {% endif %}
 	  {% endfor %}
 	</td>
 	<td>{{ g.stage }}</td>
-	<td><a href={{ links[g] }}>Link</a></td>
+	<td><a href={{ links[g] }}>Game</a></td>
       </tr>
     {% endfor %}	    
   </table>
