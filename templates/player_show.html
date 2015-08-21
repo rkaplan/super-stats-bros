@@ -4,4 +4,48 @@
 
 {% block content %}
 
+<div class="container">
+  <div id="test_chart" class="chart"></div>
+  <script>
+    var series = {{ series|safe }}
+    var title = {{ title|safe }}
+    var xAxis = {{ xAxis|safe }}
+    var yAxis = {{ yAxis|safe }}
+    var chart = {{ chart|safe }}
+    var tooltip = {{ tooltip|safe }}
+    var plotOptions = {{ plotOptions|safe }}
+  </script>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Players</th>
+      <th>Stage</th>
+      <th>Place</th>
+      <th></th>
+    </tr>
+    {% for g in recent_games: %}
+      <tr>
+	<td>
+	  {% for p in players[g[0]] %}
+	    {{ p[0] }} ({{ p[1] }})
+	    {% if p != players[g[0]][-1] %}
+	      vs.<br>
+	    {% endif %}
+	  {% endfor %}
+	</td>
+	<td>{{ g[0].stage }}</td>
+	<td>{{ "1st" if g[1]==0 else "2nd" if g[1]==1 else "3rd" if g[1]==2 else "4th"}}</td>
+	<td><a href={{ links[g[0]] }}>Link</a></td>
+      </tr>
+    {% endfor %}	    
+  </table>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src={{ url_for('static', filename='chart.js') }}></script>
+  <script src={{ url_for('static', filename='index.js') }}></script>
 {% endblock %}

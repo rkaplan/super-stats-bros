@@ -13,6 +13,7 @@ def index_show():
     playerscol = connection['test'].players
 
     games = list(gamescol.Game.find())
+    games = sorted(games, key=lambda g: g.end_ts)[-20:]
     players = {}
     links = {}
     for g in games:
@@ -20,5 +21,7 @@ def index_show():
         for p in g.players:
             players[g].append((playerscol.Player.find_one({'id':p['player_id']}).name,p['character']))
         links[g] = url_for('match.show', id=g.id)
+
+    
     
     return render_template('index.html', recent_games=games, players=players, links=links)
