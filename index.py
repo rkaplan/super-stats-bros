@@ -24,7 +24,7 @@ def index_show():
             players[g].append((playerscol.Player.find_one({'id':p['player_id']}).name,p['character']))
         links[g] = url_for('match.show', id=g.id)
 
-    response = json.loads(requests.get('https://api.twitch.tv/kraken/channels/superstatsbro').content)
-    mature = response[unicode('mature')]
+    response = json.loads(requests.get('https://api.twitch.tv/kraken/streams/superstatsbro').content)
+    online = response[unicode('stream')]
     
-    return render_template('index.html', recent_games=games, players=players, links=links, response=response, mature=mature)
+    return render_template('index.html', recent_games=games, players=players, links=links, response=response, online=online)

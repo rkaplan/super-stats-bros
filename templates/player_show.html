@@ -6,6 +6,10 @@
 
 <div class="container">
   <h1>{{player.name}}</h1>
+  <div align="right">
+    Total games played: {{total_games}} <br>
+    Wins: {{total_wins}} -- Win rate: {{total_wins/total_games*100}}% 
+  </div>
 
   <div class="well">
     <div id="test_chart" class="chart"></div>

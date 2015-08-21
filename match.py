@@ -31,10 +31,11 @@ def show(id):
             prev = stock
             ps = s
         for s in game.states:
+            time = s['ts']-game['start_ts']
             if s not in ko:
-                pdata.append({'x': (s['ts']-game['start_ts']).seconds*1000, 'y': s['player_states'][p['player_id']]['damage'], 'marker': {'symbol': shapes[currcolor]}})
+                pdata.append({'x': time.seconds*1000 - time.microseconds/1000, 'y': s['player_states'][p['player_id']]['damage'], 'marker': {'symbol': shapes[currcolor]}})
             else:
-                pdata.append({'x': (s['ts']-game['start_ts']).seconds*1000, 'y': s['player_states'][p['player_id']]['damage'], 'marker': {'enabled': 1, 'symbol': 'url(' + url_for('static', filename='explosion.png') + ')'}})
+                pdata.append({'x': time.seconds*1000 - time.microseconds/1000, 'y': s['player_states'][p['player_id']]['damage'], 'marker': {'enabled': 1, 'symbol': 'url(' + url_for('static', filename='explosion.png') + ')'}})
                 if first:
                     series.append({"name":str(players[p['player_id']]['name']), "data": pdata, "color": colors[currcolor]})
                 else:

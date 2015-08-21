@@ -12,6 +12,9 @@ def player_show(name):
     gamescol = connection['test'].games
     char_games = {}
     char_wins = {}
+
+    total_games = 0
+    total_wins = 0
     
     chart = {"renderTo": 'test_chart', "type": 'column', "height": 350}
 
@@ -26,11 +29,13 @@ def player_show(name):
             char_games[char] = 0
             char_wins[char] = 0
         char_games[char] += 1
+        total_games += 1
 
         if g['place'] == 0:
             if char not in char_wins:
                 char_wins[char] = 0
             char_wins[char] += 1
+            total_wins += 1
 
     top_char = sorted(char_games, key=char_games.__getitem__)[-5:]
             
@@ -52,4 +57,4 @@ def player_show(name):
             players[g[0]].append((playerscol.Player.find_one({'id':p['player_id']}).name,p['character']))
         links[g[0]] = url_for('match.show', id=g[0].id)
 
-    return render_template('player_show.html', player=player, chart=chart, series=series, plotOptions=plotOptions, title=title, xAxis=xAxis, yAxis=yAxis, tooltip=tooltip, recent_games=recent_games, players=players, links=links)
+    return render_template('player_show.html', player=player, chart=chart, series=series, plotOptions=plotOptions, title=title, xAxis=xAxis, yAxis=yAxis, tooltip=tooltip, recent_games=recent_games, players=players, links=links, total_games=total_games, total_wins=total_wins)
