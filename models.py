@@ -32,4 +32,5 @@ class Player(Document):
             'place': int
         }]
     }
+    use_dot_notation = True
           

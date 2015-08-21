@@ -1,0 +1,38 @@
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}SUPER STATS BROS{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>SUPER STATS BROS!</h1>
+    <p>Description to be added...</p>
+  </div>
+
+  <h2>Recent Games</h2>
+  
+  <table class="table table-striped">
+    <tr>
+      <th>Players</th>
+      <th>Stage</th>
+      <th></th>
+    </tr>
+    {% for g in recent_games: %}
+      <tr>
+	<td>
+	  {% for p in players[g] %}
+	    {{ p[0] }} ({{ p[1] }})
+	    {% if p != players[g][-1] %}
+	      vs.<br>
+	    {% endif %}
+	  {% endfor %}
+	</td>
+	<td>{{ g.stage }}</td>
+	<td><a href={{ links[g] }}>Link</a></td>
+      </tr>
+    {% endfor %}	    
+  </table>
+</div>
+
+{% endblock %}
